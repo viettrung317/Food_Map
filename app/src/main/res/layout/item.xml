@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+    <TextView
+        android:id="@+id/txtDiaChi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="10km"
+        android:textColor="#726a6a"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/txtTenMon"
+        app:layout_constraintStart_toStartOf="@+id/txtTenMon"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenMon" />
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/phobo" />
+
+    <TextView
+        android:id="@+id/txtTenQuan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Phở đệ nhất"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+
+    <TextView
+        android:id="@+id/txtTenMon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Phở bát đá"
+        android:textColor="#726a6a"
+        app:layout_constraintEnd_toEndOf="@+id/txtTenQuan"
+        app:layout_constraintStart_toStartOf="@+id/txtTenQuan"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenQuan" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#2a2c2c"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

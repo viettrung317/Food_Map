@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeMainActivity"
+    android:background="@color/black">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvSlide"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lvItem"
+        app:layout_constraintStart_toStartOf="@+id/lvItem"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/rcvSlide"
+        app:layout_constraintEnd_toEndOf="@+id/rcvSlide"
+        app:layout_constraintStart_toStartOf="@+id/rcvSlide"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/txtSeachFood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#2c2a2a"
+            android:drawableRight="@drawable/search"
+            android:hint="Tìm kiếm nhà hàng và món ăn"
+            android:padding="10dp"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <ListView
+        android:id="@+id/lvItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcvSlide"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

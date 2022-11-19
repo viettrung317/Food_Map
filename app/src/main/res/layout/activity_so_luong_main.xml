@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SoLuongMainActivity"
+    android:background="@color/black">
+
+    <EditText
+        android:id="@+id/txtAddSoLuong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#2a2c2c"
+        android:ems="10"
+        android:hint="Nhập số lượng"
+        android:inputType="number"
+        android:padding="8dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#726c6c"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnAddSoLuong"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F37C7C"
+        android:text="Chọn"
+        android:textSize="20sp"
+        app:circularflow_radiusInDP="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/txtAddSoLuong"
+        app:layout_constraintStart_toStartOf="@+id/txtAddSoLuong"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddSoLuong" />
+</androidx.constraintlayout.widget.ConstraintLayout>

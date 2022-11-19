@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".MenuMainActivity">
+
+
+    <ImageView
+        android:id="@+id/imgAvtMenu"
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gadoi" />
+
+    <TextView
+        android:id="@+id/txtMenuName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="-40dp"
+        android:layout_marginEnd="50dp"
+        android:background="#2a2c2c"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:text="Gà đồi quán-Gà đồi tây nguyên"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgAvtMenu"
+        app:layout_constraintStart_toStartOf="@+id/imgAvtMenu"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvtMenu"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/txtAdressMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2a2c2c"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="123-Lương Đình Của,Phường Đông Hòa,TP Dĩ An"
+        android:textColor="#726c6c"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtMenuName"
+        app:layout_constraintStart_toStartOf="@+id/txtMenuName"
+        app:layout_constraintTop_toBottomOf="@+id/txtMenuName"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="Thực Đơn"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAdressMenu" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#2a2c2c"
+        app:layout_constraintEnd_toEndOf="@+id/textView27"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <ListView
+        android:id="@+id/lvMenu"
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView27"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

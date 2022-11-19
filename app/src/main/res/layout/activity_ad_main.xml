@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdMainActivity">
+
+    <ImageButton
+        android:id="@+id/ibtnAddCameraMon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAddMon"
+        app:layout_constraintStart_toEndOf="@+id/imgAddMon"
+        app:layout_constraintTop_toTopOf="@+id/imgAddMon"
+        app:srcCompat="@drawable/camera"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/ibtnAddFolderQuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtnAddCameraQuan"
+        app:layout_constraintStart_toEndOf="@+id/ibtnAddCameraQuan"
+        app:layout_constraintTop_toTopOf="@+id/ibtnAddCameraQuan"
+        app:srcCompat="@drawable/foder"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/txtTenQuanAd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Tên quán"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/txtTenMonAd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Tên món đại diện"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenQuanAd"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/txtDiaChiAd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Địa chỉ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenMonAd"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btnUpdateAd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtGiaAd"
+        app:layout_constraintStart_toStartOf="@+id/txtGiaAd" />
+
+
+    <Button
+        android:id="@+id/btnAddMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Thêm món vào menu"
+        app:layout_constraintTop_toBottomOf="@+id/imgAddMon"
+        tools:layout_editor_absoluteX="120dp" />
+
+    <EditText
+        android:id="@+id/txtTenMonAdMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Tên món"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/txtGiaAd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="giá"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenMonAdMenu"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Thêm thông tin món ăn vào menu"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtDiaChiAd"
+        app:layout_constraintStart_toStartOf="@+id/txtDiaChiAd"
+        app:layout_constraintTop_toBottomOf="@+id/imgAddQuan" />
+
+    <ImageButton
+        android:id="@+id/ibtnAddCameraQuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAddQuan"
+        app:layout_constraintStart_toEndOf="@+id/imgAddQuan"
+        app:layout_constraintTop_toTopOf="@+id/imgAddQuan"
+        app:srcCompat="@drawable/camera"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/ibtnAddFolderMon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtnAddCameraMon"
+        app:layout_constraintStart_toEndOf="@+id/ibtnAddCameraMon"
+        app:layout_constraintTop_toTopOf="@+id/ibtnAddCameraMon"
+        app:srcCompat="@drawable/foder"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/imgAddQuan"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/txtDiaChiAd"
+        app:layout_constraintTop_toBottomOf="@+id/txtDiaChiAd"
+        app:srcCompat="@drawable/logofoodmap" />
+
+    <ImageView
+        android:id="@+id/imgAddMon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/txtGiaAd"
+        app:layout_constraintTop_toBottomOf="@+id/txtGiaAd"
+        app:srcCompat="@drawable/logofoodmap" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
