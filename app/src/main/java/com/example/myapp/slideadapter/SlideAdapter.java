@@ -1,6 +1,7 @@
 package com.example.myapp.slideadapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,36 +9,38 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.myapp.R;
 import com.example.myapp.slidemodel.Slide;
+import com.example.myapp.slidemodel.SlideFragment;
 
 import java.util.List;
 
 
-public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.SlideViewHolder>{
+public class SlideAdapter extends FragmentStateAdapter {
     private List<Slide> slideList;
-    private Activity context;
-    public SlideAdapter(List<Slide> slideList,Activity context){
+    public SlideAdapter(@NonNull FragmentActivity fragmentActivity,List<Slide> slideList) {
+        super(fragmentActivity);
         this.slideList=slideList;
-        this.context=context;
-
     }
+
     @NonNull
     @Override
-    public SlideViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.slide_show,parent,false);
-        return new SlideViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull SlideViewHolder holder, int position) {
+    public Fragment createFragment(int position) {
         Slide slide=slideList.get(position);
-        if(slide==null) return;
-        holder.imgSlide.setImageResource(slide.getResourceID());
+        //Chuyển oject slide sang fragment
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("slide",slide);
 
+        SlideFragment slideFragment=new SlideFragment();
+        slideFragment.setArguments(bundle);
+        return slideFragment;
     }
+
 
     @Override
     public int getItemCount() {
@@ -47,8 +50,8 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.SlideViewHol
         return 0;
     }
 
-    public class SlideViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgSlide;
+    public static class SlideViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView imgSlide;
         public SlideViewHolder(@NonNull View itemView) {
             super(itemView);
             imgSlide=(ImageView) itemView.findViewById(R.id.imgSlide);
