@@ -58,6 +58,7 @@ public class AdMainActivity extends AppCompatActivity {
     Bitmap bitmapImagesQuan=null;
     Bitmap bitmapImagesMon=null;
     int temp=0;
+    private Double Latitude,Longitude;
     FirebaseStorage storage=FirebaseStorage.getInstance();
     //StorageReference mountainImagesRef = storageRef.child("images/mountains.jpg");
     @Override
@@ -256,6 +257,8 @@ public class AdMainActivity extends AppCompatActivity {
                                         item.setDiaChi(diachi);
                                         item.setImageSourceID(downloadUrlQuan.toString());
                                         item.setMenuList(menuList);
+                                        item.setLatitude(Latitude);
+                                        item.setLongitude(Longitude);
                                         ref.child("Source").child(tenquan).setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -299,5 +302,8 @@ public class AdMainActivity extends AppCompatActivity {
         db=FirebaseDatabase.getInstance();
         ref=db.getReference();
         menuList=new ArrayList<>();
+        Intent intent=getIntent();
+        Latitude=intent.getDoubleExtra("Latitude",0.0);
+        Longitude=intent.getDoubleExtra("Longitude",0.0);
     }
 }

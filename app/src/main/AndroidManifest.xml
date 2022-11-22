@@ -18,17 +18,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".SoLuongMainActivity"
+            android:name=".EditAvatarMainActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog"
-            >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TestMaps"
-            android:exported="true">
+            android:theme="@style/Theme.AppCompat.Dialog">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

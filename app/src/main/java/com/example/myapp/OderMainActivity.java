@@ -7,15 +7,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +34,7 @@ import com.example.myapp.menuadapter.Menuadapter;
 import com.example.myapp.menumodel.Menu;
 import com.example.myapp.usermodel.UserSignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,37 +86,79 @@ public class OderMainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Menu menu = listOder.get(position);
-                new AlertDialog.Builder(OderMainActivity.this)
-                        .setTitle(R.string.app_name)
-                        .setMessage("Bạn muốn ?")
-                        .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //oderAdapter.remove(oderAdapter.getItem(position));
-                                removedata(menu);
-                                oderAdapter.remove(oderAdapter.getItem(position));
-                                Toast.makeText(OderMainActivity.this, "Đã xóa "+menu.getTenMonAn()+" khỏi danh sách !", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton("Sửa", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String user=getUser();
-                                Intent intent=new Intent(OderMainActivity.this,SoLuongMainActivity.class);
-                                intent.putExtra("Menu",menu);
-                                intent.putExtra("User",user);
-                                startActivity(intent);
-                                finish();
-                                oderAdapter.notifyDataSetChanged();
+                openDialog(Gravity.CENTER,position,menu);
 
-                            }
-                        })
-                        .show();
             }
         });
 
 
         }
+
+    private void openDialog(int gravity,int position,Menu menu) {
+        final Dialog dialog=new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit_sl);
+        Window window= dialog.getWindow();
+        if(window==null){
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes=window.getAttributes();
+        windowAttributes.gravity=gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.BOTTOM==gravity){
+            dialog.setCancelable(true);
+        }
+        else{
+            dialog.setCancelable(false);
+        }
+        EditText txtEditsl=dialog.findViewById(R.id.txtEditsl);
+        Button btnCancelsl=dialog.findViewById(R.id.btnCancelsl);
+        Button btnDelete=dialog.findViewById(R.id.btnDeleteItem);
+        Button btnUpdatesl=dialog.findViewById(R.id.btnUpdateSl);
+        btnCancelsl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removedata(menu);
+                oderAdapter.remove(oderAdapter.getItem(position));
+                dialog.dismiss();
+                Toast.makeText(OderMainActivity.this, "Đã xóa "+menu.getTenMonAn()+" khỏi danh sách !", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnUpdatesl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sl=txtEditsl.getText().toString();
+                if(TextUtils.isEmpty(sl)){
+                    txtEditsl.setError("Vui lòng nhập số lượng !");
+                    txtEditsl.requestFocus();
+                }
+                else{
+                    int i=Integer.parseInt(sl);
+                    menu.setSoLuong(i);
+                    ref.child(getUser()).child("listoder").child(menu.getTenMonAn()).updateChildren(menu.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            listOder=new ArrayList<>();
+                            oderAdapter=new Menuadapter(OderMainActivity.this,R.layout.item_menu,listOder);
+                            getData();
+                            dialog.dismiss();
+                        }
+                    });
+
+                }
+            }
+        });
+        dialog.show();
+    }
 
 
 

@@ -50,19 +50,25 @@ public class HomeMainActivity extends AppCompatActivity {
     private EditText txtSeachFood;
     FirebaseDatabase database=FirebaseDatabase.getInstance();
     DatabaseReference ref=database.getReference();
+    private int seach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_main);
+        addControl();
         sLide();
         iTem();
         filterList();
-//        List<Menu> list=new ArrayList<>();
-//        list.add(new Menu("200.000đ","gà nướng mọi","https://firebasestorage.googleapis.com/v0/b/myapp-8af87.appspot.com/o/imageQuan1668227680164.png?alt=media&token=bbf75201-dc8d-42bf-8810-5e469104ec37"));
-//        list.add(new Menu("180.000đ","gà luộc","https://firebasestorage.googleapis.com/v0/b/myapp-8af87.appspot.com/o/imageQuan1668227680164.png?alt=media&token=bbf75201-dc8d-42bf-8810-5e469104ec37"));
-//        Item item=new Item("gà đồi","gà kfc","bình dương","https://firebasestorage.googleapis.com/v0/b/myapp-8af87.appspot.com/o/imageQuan1668227680164.png?alt=media&token=bbf75201-dc8d-42bf-8810-5e469104ec37",list);
-//        ref.child("sbxbxbdy").updateChildren(item.toMap());
         addEvents();
+    }
+
+    private void addControl() {
+        txtSeachFood=(EditText) findViewById(R.id.txtSeachFood) ;
+        Intent intent=getIntent();
+        seach=intent.getIntExtra("Seach",0);
+        if(seach==1){
+            txtSeachFood.requestFocus();
+        }
     }
 
     private void filterList() {
@@ -97,7 +103,6 @@ public class HomeMainActivity extends AppCompatActivity {
     }
 
     private void iTem() {
-        txtSeachFood=(EditText) findViewById(R.id.txtSeachFood) ;
         lvItem=(ListView) findViewById(R.id.lvItem);
         itemList=new ArrayList<>();
         itemAdapter=new ItemAdapter(HomeMainActivity.this,R.layout.item,itemList);

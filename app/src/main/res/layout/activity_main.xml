@@ -72,30 +72,21 @@
         app:srcCompat="@drawable/menu"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-    <androidx.cardview.widget.CardView
+    <Button
+        android:id="@+id/btnSeach"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/black"
-        app:cardCornerRadius="15dp"
+        android:backgroundTint="#2a2c2c"
+        android:gravity="center|left"
+        android:text="Tìm kiếm ..."
+        android:textColor="#726c6c"
+        android:textStyle="italic"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/ibtnMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ibtnMenu"
-        app:layout_constraintTop_toTopOf="@+id/ibtnMenu">
+        app:layout_constraintTop_toTopOf="@+id/ibtnMenu" />
 
-        <EditText
-            android:id="@+id/textSeach"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:drawableRight="@drawable/search"
-            android:hint="Tìm kiếm ..."
-            android:padding="10dp"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ibtnMenu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ibtnMenu"
-            app:layout_constraintTop_toTopOf="@+id/ibtnMenu" />
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,12 +41,17 @@ import java.util.List;
 public class MenuMainActivity extends AppCompatActivity {
     private TextView txtMenuName,txtAdressMenu;
     private ImageView imgAvtMenu;
+    private ImageButton ibtnLocation;
     private List<Menu> menuList,listOrder;
     private List<UserSignUp> listUser;
     private ListView lvMenu;
     private Menuadapter menuadapter;
+    private Double Latitude,Longitude;
+    private String name;
+    private Item item;
     FirebaseDatabase database=FirebaseDatabase.getInstance();
     DatabaseReference ref=database.getReference("User");
+    DatabaseReference ref1=database.getReference("User");
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,17 @@ public class MenuMainActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        ibtnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MenuMainActivity.this,MainActivity.class);
+                intent.putExtra("Item",item);
+                intent.putExtra("Lat",Latitude);
+                intent.putExtra("Long",Longitude);
+                intent.putExtra("name",name);
+                startActivity(intent);
+            }
+        });
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -92,10 +109,11 @@ public class MenuMainActivity extends AppCompatActivity {
         txtMenuName=(TextView) findViewById(R.id.txtMenuName);
         txtAdressMenu=(TextView) findViewById(R.id.txtAdressMenu);
         imgAvtMenu=(ImageView) findViewById(R.id.imgAvtMenu);
+        ibtnLocation=(ImageButton) findViewById(R.id.ibtnLocation);
         lvMenu=(ListView) findViewById(R.id.lvMenu);
         menuList=new ArrayList<>();
         Intent intent=getIntent();
-        Item item=(Item) intent.getSerializableExtra("Item");
+        item=(Item) intent.getSerializableExtra("Item");
         txtMenuName.setText(item.getTenQuan());
         txtAdressMenu.setText(item.getDiaChi());
         Picasso.with(MenuMainActivity.this).load(item.getImageSourceID()).into(imgAvtMenu);
@@ -103,7 +121,8 @@ public class MenuMainActivity extends AppCompatActivity {
         menuadapter=new Menuadapter(MenuMainActivity.this,R.layout.item_menu,menuList);
         lvMenu.setAdapter(menuadapter);
         menuadapter.notifyDataSetChanged();
-
-
+        Latitude=item.getLatitude();
+        Longitude= item.getLongitude();
+        name=item.getTenQuan();
     }
 }

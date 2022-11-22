@@ -9,18 +9,45 @@ import java.util.List;
 import java.util.Map;
 
 public class UserSignUp implements Serializable {
-    private String userName,email,avatar;
+    private String userName,email,avatar,gioiTinh,soDT,ngaySinh;
     private List<Menu> listoder,listDaMua;
     public Map<String, Boolean> stars = new HashMap<>();
     public UserSignUp(){
 
     }
-    public UserSignUp(String userName,String email,String avatar,List<Menu>listoder,List<Menu> listDaMua) {
+    public UserSignUp(String userName,String email,String avatar,List<Menu>listoder,List<Menu> listDaMua,String gioiTinh,String soDT,String ngaySinh) {
         this.userName=userName;
         this.email = email;
         this.avatar=avatar;
         this.listoder=listoder;
         this.listDaMua=listDaMua;
+        this.gioiTinh=gioiTinh;
+        this.ngaySinh=ngaySinh;
+        this.soDT=soDT;
+    }
+
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getSoDT() {
+        return soDT;
+    }
+
+    public void setSoDT(String soDT) {
+        this.soDT = soDT;
+    }
+
+    public String getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(String ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
     public String getUserName() {
@@ -70,6 +97,9 @@ public class UserSignUp implements Serializable {
         result.put("avatar", avatar);
         result.put("listoder", listoder);
         result.put("listDaMua",listDaMua);
+        result.put("gioiTinh",gioiTinh);
+        result.put("ngaySinh'",ngaySinh);
+        result.put("soDT",soDT);
         result.put("stars", stars);
 
         return result;

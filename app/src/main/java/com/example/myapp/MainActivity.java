@@ -11,6 +11,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import com.example.myapp.Itemmodel.Item;
+import com.example.myapp.datamap.FetchURL;
+import com.example.myapp.datamap.TaskLoadedCallback;
+import com.example.myapp.itemadapter.TitleAdapter;
+import com.example.myapp.usermodel.UserSignUp;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +36,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -65,15 +72,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toast mToast;
     ImageButton ibtnMenu,ibtnUser,ibtnHome,ibtnOrder,ibtnHistory;
     FirebaseAuth mAuth;
-    private GoogleMap mMap;
+    Button btnSeach;
     private static final int REQUEST_CODE_GPS_PERMISSION = 100;
-
-    private static LatLng AMSTERDAM;
-    private static LatLng PARIS;
+    private GoogleMap mMap;
     private Polyline newPolyline;
     private LatLngBounds latlngBounds;
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
     private DatabaseReference ref=db.getReference();
+    private LatLng pl1;
+    private Double Latitude,Longitude;
+    private Double lat=0.0,log=0.0;
+    private String name;
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,15 +105,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //Xử lý hàm trở lại để thoát
     public void onBackPressed(){
-        if(backPressedTime+2000>System.currentTimeMillis()){
-            mToast.cancel();//khi thoát ứng dụng sẽ ko hiện thông báo toast
-            super.onBackPressed();
-            return;
-        }else {
-            mToast=Toast.makeText(this, "Nhấn lần nữa để thoát!", Toast.LENGTH_SHORT);
-            mToast.show();
+        if(TextUtils.isEmpty(name)){
+            if(backPressedTime+2000>System.currentTimeMillis()){
+                mToast.cancel();//khi thoát ứng dụng sẽ ko hiện thông báo toast
+                super.onBackPressed();
+                return;
+            }else {
+                mToast=Toast.makeText(this, "Nhấn lần nữa để thoát!", Toast.LENGTH_SHORT);
+                mToast.show();
+            }
+            backPressedTime=System.currentTimeMillis();
         }
-        backPressedTime=System.currentTimeMillis();
+        else{
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startActivity(startMain);
+
+        }
+
     }
 
     @Override
@@ -127,6 +146,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        if(lat!=0.0 && log!=00) {
+            pl1 = new LatLng(lat, log);
+            Marker marker=mMap.addMarker(new MarkerOptions().position(pl1).title(name));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pl1, 17));
+            mMap.setInfoWindowAdapter(new TitleAdapter(MainActivity.this,item));
+            marker.showInfoWindow();
+        }else{
+            getCurrentLocation();
+        }
         mMap.setMyLocationEnabled(true);
     }
 
@@ -137,8 +166,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             //TODO: Get current location
-            getCurrentLocation();
-            //dẫn đường
+            //getCurrentLocation();
         } else {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_CODE_GPS_PERMISSION);
@@ -167,9 +195,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     return;
                 }
                 LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                Latitude=location.getLatitude();
+                Longitude=location.getLongitude();
                 //mMap.addMarker(new MarkerOptions().position(currentLocation).title("Vị trí hiện tại của bạn"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,17));
 
+
+
+//                pl1=new LatLng(10.882885848145596, 106.78245011085099);
+//                pl2=new LatLng(10.876488866301308, 106.79904111085007);
+//                place1 = new MarkerOptions().position(pl1).title("Location 1");
+//                place2 = new MarkerOptions().position(pl2).title("Location 2");
+//                String url=getUrl(place1.getPosition(),place2.getPosition(),"driving");
+//                new FetchURL(MainActivity.this).execute(url,"driving");
 
             }
         });
@@ -191,6 +229,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+//    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+//        // Origin of route
+//        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+//        // Destination of route
+//        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+//        // Mode
+//        String mode = "mode=" + directionMode;
+//        // Building the parameters to the web service
+//        String parameters = str_origin + "&" + str_dest + "&" + mode;
+//        // Output format
+//        String output = "json";
+//        // Building the url to the web service
+//        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_api_key);
+//        return url;
+//    }
+//    @Override
+//    public void onTaskDone(Object... values) {
+//        if(newPolyline!=null){
+//            newPolyline.remove();
+//        }
+//        newPolyline=mMap.addPolyline((PolylineOptions) values[0]);
+//    }
 
     private void addEvents() {
         ibtnUser.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +278,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ibtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,AdMainActivity.class));
+                Intent intent=new Intent(MainActivity.this,AdMainActivity.class);
+                intent.putExtra("Latitude",Latitude);
+                intent.putExtra("Longitude",Longitude);
+                startActivity(intent);
             }
         });
         ibtnOrder.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(j==0) {
+                            UserSignUp userSignUp=snapshot.getValue(UserSignUp.class);
                             startActivity(new Intent(MainActivity.this, HistoryMainActivity.class));
                         }
                         j=1;
@@ -270,6 +334,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         });
+        btnSeach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ref.child("Source").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Intent inten =new Intent(MainActivity.this,HomeMainActivity.class);
+                        inten.putExtra("Seach",1);
+                        startActivity(inten);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
     }
 
 
@@ -279,8 +361,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ibtnHome=findViewById(R.id.ibtnHome);
         ibtnOrder=findViewById(R.id.ibtnOrder);
         ibtnHistory=findViewById(R.id.ibtnHistory);
+        btnSeach=findViewById(R.id.btnSeach);
         mAuth = FirebaseAuth.getInstance();
-
-
+        Intent intent=getIntent();
+        item=(Item) intent.getSerializableExtra("Item");
+        lat= intent.getDoubleExtra("Lat",0.0);
+        log=intent.getDoubleExtra("Long",0.0);
+        name=intent.getStringExtra("name");
     }
 }
