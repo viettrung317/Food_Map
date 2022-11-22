@@ -7,53 +7,54 @@
     tools:context=".HomeMainActivity"
     android:background="@color/black">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvSlide"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpSlide"
         android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="16dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/txtSeachFood"
+        app:layout_constraintStart_toStartOf="@+id/txtSeachFood"
+        app:layout_constraintTop_toBottomOf="@+id/txtSeachFood" />
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/circleIndicator3"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/vpSlide"
+        app:layout_constraintStart_toStartOf="@+id/vpSlide"
+        app:layout_constraintTop_toBottomOf="@+id/vpSlide"
+        app:ci_drawable="@drawable/bg_cri"/>
+
+
+    <EditText
+        android:id="@+id/txtSeachFood"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/lvItem"
-        app:layout_constraintStart_toStartOf="@+id/lvItem"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_edittext"
+        android:drawableRight="@drawable/search"
+        android:hint="Tìm kiếm nhà hàng và món ăn"
+        android:padding="10dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/rcvSlide"
-        app:layout_constraintEnd_toEndOf="@+id/rcvSlide"
-        app:layout_constraintStart_toStartOf="@+id/rcvSlide"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/txtSeachFood"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#2c2a2a"
-            android:drawableRight="@drawable/search"
-            android:hint="Tìm kiếm nhà hàng và món ăn"
-            android:padding="10dp"
-            android:textSize="16sp" />
-    </androidx.cardview.widget.CardView>
-
-
+        tools:ignore="TouchTargetSizeCheck" />
 
 
     <ListView
         android:id="@+id/lvItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcvSlide"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/vpSlide"
+        app:layout_constraintStart_toStartOf="@+id/vpSlide"
+        app:layout_constraintTop_toBottomOf="@+id/circleIndicator3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
