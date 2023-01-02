@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeMainActivity"
-    android:background="@color/black">
+    android:background="@color/black"
+    tools:context=".HomeMainActivity">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vpSlide"
@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
+        app:ci_drawable="@drawable/bg_cri"
         app:layout_constraintEnd_toEndOf="@+id/vpSlide"
         app:layout_constraintStart_toStartOf="@+id/vpSlide"
-        app:layout_constraintTop_toBottomOf="@+id/vpSlide"
-        app:ci_drawable="@drawable/bg_cri"/>
+        app:layout_constraintTop_toBottomOf="@+id/vpSlide" />
 
 
     <EditText

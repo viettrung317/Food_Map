@@ -70,7 +70,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private long backPressedTime;
     private Toast mToast;
-    ImageButton ibtnMenu,ibtnUser,ibtnHome,ibtnOrder,ibtnHistory;
+    ImageButton ibtnMenu,ibtnUser,ibtnHome,ibtnOrder,ibtnHistory,ibtnBill;
     FirebaseAuth mAuth;
     Button btnSeach;
     private static final int REQUEST_CODE_GPS_PERMISSION = 100;
@@ -292,7 +292,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(i==0) {
-                            startActivity(new Intent(MainActivity.this, OderMainActivity.class));
+                            Intent intent=new Intent(MainActivity.this,OderMainActivity.class);
+                            intent.putExtra("tttc","");
+                            startActivity(intent);
                         }
                         i=1;
                     }
@@ -303,7 +305,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
                 if(i==1){
-                    startActivity(new Intent(MainActivity.this,OderMainActivity.class));
+                    Intent intent=new Intent(MainActivity.this,OderMainActivity.class);
+                    intent.putExtra("tttc","");
+                    startActivity(intent);
                 }
             }
 
@@ -352,14 +356,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
             }
         });
+        ibtnBill.setOnClickListener(new View.OnClickListener() {
+            int i=0;
+            @Override
+            public void onClick(View view) {
+                ref.child("User").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(i==0) {
+                            Intent intent=new Intent(MainActivity.this,CartMainActivity.class);
+
+                            startActivity(intent);
+                        }
+                        i=1;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                if(i==1){
+                    Intent intent=new Intent(MainActivity.this,CartMainActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+
+        });
     }
 
 
     private void addControl() {
-        ibtnMenu=findViewById(R.id.ibtnMenu);
-        ibtnUser=findViewById(R.id.ibtnUser);
-        ibtnHome=findViewById(R.id.ibtnHome);
-        ibtnOrder=findViewById(R.id.ibtnOrder);
+        ibtnMenu=(ImageButton)findViewById(R.id.ibtnMenu);
+        ibtnUser=(ImageButton)findViewById(R.id.ibtnUser);
+        ibtnHome=(ImageButton)findViewById(R.id.ibtnHome);
+        ibtnOrder=(ImageButton)findViewById(R.id.ibtnOrder);
+        ibtnBill=(ImageButton) findViewById(R.id.ibtnBill);
         ibtnHistory=findViewById(R.id.ibtnHistory);
         btnSeach=findViewById(R.id.btnSeach);
         mAuth = FirebaseAuth.getInstance();

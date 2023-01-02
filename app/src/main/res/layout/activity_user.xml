@@ -178,6 +178,7 @@
             android:id="@+id/imgAvatarUser"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:scaleType="centerCrop"
             android:background="#FF2196F3"
             app:srcCompat="@drawable/user" />
     </androidx.cardview.widget.CardView>

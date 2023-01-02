@@ -26,15 +26,13 @@
         android:id="@+id/ibtnHistory"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="30dp"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/ibtnUser"
         app:layout_constraintEnd_toStartOf="@+id/ibtnUser"
-        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toEndOf="@+id/ibtnHome"
         app:layout_constraintTop_toTopOf="@+id/ibtnUser"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/history"
-        android:background="@color/black"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -88,5 +86,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ibtnMenu"
         app:layout_constraintTop_toTopOf="@+id/ibtnMenu" />
+
+    <ImageButton
+        android:id="@+id/ibtnBill"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtnUser"
+        app:layout_constraintEnd_toStartOf="@+id/ibtnUser"
+        app:layout_constraintStart_toEndOf="@+id/ibtnHistory"
+        app:layout_constraintTop_toTopOf="@+id/ibtnUser"
+        app:srcCompat="@drawable/cart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

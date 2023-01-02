@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapp.menumodel.Bill;
 import com.example.myapp.menumodel.Menu;
 import com.example.myapp.usermodel.UserSignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +57,7 @@ public class SignUp extends AppCompatActivity {
     ProgressBar progress;
     FirebaseAuth mAuth;
     private List<Menu> oderlist,listDaMua;
+    private List<Bill> listBill;
     private Menu menu;
     private FirebaseDatabase db;
     private DatabaseReference ref;
@@ -191,14 +193,17 @@ public class SignUp extends AppCompatActivity {
                                         userSignUp.setEmail(email);
                                         userSignUp.setUserName(user);
                                         userSignUp.setAvatar(downloadUrl.toString());
+                                        listBill=new ArrayList<>();
                                         oderlist = new ArrayList<>();
                                         listDaMua=new ArrayList<>();
+                                        userSignUp.setListBill(listBill);
                                         userSignUp.setListoder(oderlist);
                                         userSignUp.setListDaMua(listDaMua);
                                         ref.child("User").child(user).setValue(userSignUp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+                                                    listBill=new ArrayList<>();
                                                     oderlist = new ArrayList<>();
                                                     listDaMua=new ArrayList<>();
                                                 }

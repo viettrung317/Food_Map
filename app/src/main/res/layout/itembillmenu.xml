@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtTenmonItemBill"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textColor="@color/color_menu"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSLItemBill"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="10"
+        android:textColor="@color/color_menu"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTenmonItemBill"
+        app:layout_constraintStart_toEndOf="@+id/txtTenmonItemBill"
+        app:layout_constraintTop_toTopOf="@+id/txtTenmonItemBill" />
+
+    <TextView
+        android:id="@+id/txtDGItemBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:textColor="@color/color_menu"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtSLItemBill"
+        app:layout_constraintStart_toEndOf="@+id/txtSLItemBill"
+        app:layout_constraintTop_toTopOf="@+id/txtSLItemBill" />
+
+    <TextView
+        android:id="@+id/txtTTItemBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:textColor="@color/color_menu"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtDGItemBill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtDGItemBill"
+        app:layout_constraintTop_toTopOf="@+id/txtDGItemBill" />
+
+    <TextView
+        android:id="@+id/textView54"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#2a2c2c"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtTenmonItemBill"
+        app:layout_constraintTop_toBottomOf="@+id/txtDGItemBill" />
+</androidx.constraintlayout.widget.ConstraintLayout>

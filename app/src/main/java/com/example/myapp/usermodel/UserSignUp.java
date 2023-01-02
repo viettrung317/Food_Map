@@ -1,5 +1,6 @@
 package com.example.myapp.usermodel;
 
+import com.example.myapp.menumodel.Bill;
 import com.example.myapp.menumodel.Menu;
 import com.google.firebase.database.Exclude;
 
@@ -11,11 +12,12 @@ import java.util.Map;
 public class UserSignUp implements Serializable {
     private String userName,email,avatar,gioiTinh,soDT,ngaySinh;
     private List<Menu> listoder,listDaMua;
+    private List<Bill> listBill;
     public Map<String, Boolean> stars = new HashMap<>();
     public UserSignUp(){
 
     }
-    public UserSignUp(String userName,String email,String avatar,List<Menu>listoder,List<Menu> listDaMua,String gioiTinh,String soDT,String ngaySinh) {
+    public UserSignUp(String userName,String email,String avatar,List<Menu>listoder,List<Menu> listDaMua,String gioiTinh,String soDT,String ngaySinh,List<Bill> listBill) {
         this.userName=userName;
         this.email = email;
         this.avatar=avatar;
@@ -24,6 +26,15 @@ public class UserSignUp implements Serializable {
         this.gioiTinh=gioiTinh;
         this.ngaySinh=ngaySinh;
         this.soDT=soDT;
+        this.listBill=listBill;
+    }
+
+    public List<Bill> getListBill() {
+        return listBill;
+    }
+
+    public void setListBill(List<Bill> listBill) {
+        this.listBill = listBill;
     }
 
     public String getGioiTinh() {
@@ -96,6 +107,7 @@ public class UserSignUp implements Serializable {
         result.put("email", email);
         result.put("avatar", avatar);
         result.put("listoder", listoder);
+        result.put("listBill",listBill);
         result.put("listDaMua",listDaMua);
         result.put("gioiTinh",gioiTinh);
         result.put("ngaySinh'",ngaySinh);

@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +55,8 @@ public class OderMainActivity extends AppCompatActivity {
     private ListView lvOder;
     private List<Menu> listOder,listBuy;
     private Menuadapter oderAdapter;
+    private String xntt="";
+    private String tong;
     FirebaseDatabase database=FirebaseDatabase.getInstance();
     DatabaseReference ref=database.getReference("User");
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
@@ -67,7 +70,6 @@ public class OderMainActivity extends AppCompatActivity {
         getData();
         addEvent();
     }
-
 
     private String getUser() {
         String userName="";
@@ -153,14 +155,11 @@ public class OderMainActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-
                 }
             }
         });
         dialog.show();
     }
-
-
 
     private void removedata(Menu menu) {
         String user = getUser();
@@ -176,6 +175,7 @@ public class OderMainActivity extends AppCompatActivity {
 
     private void getData() {
         String userName=getUser();
+        String temp="tttc";
         ref.child(userName).child("listoder").addValueEventListener(new ValueEventListener() {
             int bill=0;
             @Override
@@ -189,83 +189,93 @@ public class OderMainActivity extends AppCompatActivity {
                     bill+=(Integer.parseInt(gia)*menu.getSoLuong());
 
                 }
-                String tong=String.valueOf(bill);
+                tong=String.valueOf(bill);
                 txtTongTien.setText(tong);
                 btnThanhToan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        List<Menu> listTemp=new ArrayList<>();
-                        for(Menu menu:listOder){
-                            if(listBuy.toString().equals(listTemp.toString())){
-                                ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(OderMainActivity.this, "Đã mua thành công !", Toast.LENGTH_LONG).show();
-                                            txtTongTien.setText("0 đ");
-                                            listOder = new ArrayList<>();
-                                            oderAdapter=new Menuadapter(OderMainActivity.this,R.layout.item_menu,listOder);
-                                            ref.child(userName).child("listoder").setValue(listOder);
-                                            lvOder.setAdapter(oderAdapter);
-                                            oderAdapter.notifyDataSetChanged();
-
-                                        } else {
-                                            Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-
-                                });
-                            }
-                            else{
-                                for (Menu menu1:listBuy){
-                                    if(menu.getTenMonAn().equals(menu1.getTenMonAn())){
-                                        menu.setSoLuong(menu.getSoLuong()+menu1.getSoLuong());
-                                        ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(OderMainActivity.this, "Đã mua thành công !", Toast.LENGTH_LONG).show();
-                                                    txtTongTien.setText("0 đ");
-                                                    listOder = new ArrayList<>();
-                                                    oderAdapter=new Menuadapter(OderMainActivity.this,R.layout.item_menu,listOder);
-                                                    ref.child(userName).child("listoder").setValue(listOder);
-                                                    lvOder.setAdapter(oderAdapter);
-                                                    oderAdapter.notifyDataSetChanged();
-
-                                                } else {
-                                                    Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    }
-                                    else{
-                                        ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(OderMainActivity.this, "Đã mua thành công !", Toast.LENGTH_LONG).show();
-                                                    txtTongTien.setText("0 đ");
-                                                    listOder = new ArrayList<>();
-                                                    oderAdapter=new Menuadapter(OderMainActivity.this,R.layout.item_menu,listOder);
-                                                    ref.child(userName).child("listoder").setValue(listOder);
-                                                    lvOder.setAdapter(oderAdapter);
-                                                    oderAdapter.notifyDataSetChanged();
-
-                                                } else {
-                                                    Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-
-                                        });
-                                    }
-                                }
-                            }
-
+                        if(bill!=0) {
+                            Intent intent = new Intent(OderMainActivity.this, ThanhtoanActivity.class);
+                            intent.putExtra("tong", tong);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(OderMainActivity.this,"Danh sách rỗng !!!",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+                if(xntt.equals(temp)) {
+                    Toast.makeText(OderMainActivity.this, xntt, Toast.LENGTH_SHORT).show();
+                    List<Menu> listTemp = new ArrayList<>();
+                    for (Menu menu : listOder) {
+                        if (listBuy.toString().equals(listTemp.toString())) {
+                            ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(OderMainActivity.this, "Đã mua thành công !", Toast.LENGTH_LONG).show();
+                                        txtTongTien.setText("0 đ");
+                                        listOder = new ArrayList<>();
+                                        oderAdapter = new Menuadapter(OderMainActivity.this, R.layout.item_menu, listOder);
+                                        ref.child(userName).child("listoder").setValue(listOder);
+                                        lvOder.setAdapter(oderAdapter);
+                                        oderAdapter.notifyDataSetChanged();
+
+                                    } else {
+                                        Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                            });
+                        } else {
+                            for (Menu menu1 : listBuy) {
+                                if (menu.getTenMonAn().equals(menu1.getTenMonAn())) {
+                                    menu.setSoLuong(menu.getSoLuong() + menu1.getSoLuong());
+                                    ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                //Toast.makeText(OderMainActivity.this, "Đã mua thành công !", Toast.LENGTH_LONG).show();
+                                                txtTongTien.setText("0 đ");
+                                                listOder = new ArrayList<>();
+                                                oderAdapter = new Menuadapter(OderMainActivity.this, R.layout.item_menu, listOder);
+                                                ref.child(userName).child("listoder").setValue(listOder);
+                                                lvOder.setAdapter(oderAdapter);
+                                                oderAdapter.notifyDataSetChanged();
+
+
+                                            } else {
+                                                Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                    });
+                                    break;
+                                } else {
+                                    ref.child(userName).child("DaMua").child(menu.getTenMonAn()).setValue(menu).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                txtTongTien.setText("0 đ");
+                                                listOder = new ArrayList<>();
+                                                oderAdapter = new Menuadapter(OderMainActivity.this, R.layout.item_menu, listOder);
+                                                ref.child(userName).child("listoder").setValue(listOder);
+                                                lvOder.setAdapter(oderAdapter);
+                                                oderAdapter.notifyDataSetChanged();
+
+                                            } else {
+                                                Toast.makeText(OderMainActivity.this, "Registered error :" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                xntt="";
             }
 
             @Override
@@ -306,6 +316,9 @@ public class OderMainActivity extends AppCompatActivity {
         listOder=new ArrayList<>();
         listBuy=new ArrayList<>();
         oderAdapter=new Menuadapter(OderMainActivity.this,R.layout.item_menu,listOder);
+        Intent intent=getIntent();
+        xntt=intent.getStringExtra("tttc");
+
 
 
     }
