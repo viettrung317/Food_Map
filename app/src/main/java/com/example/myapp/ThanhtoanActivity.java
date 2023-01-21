@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
     private EditText txtTnnThanhToan,txtSDTNH,txtDiaChiNH;
     private Button btnHoanTatThanhToan;
     private RadioButton rdoOn,rdoOff;
+    private ProgressBar progressBar2;
     private Bill bill=new Bill();
     private List<Menu> menuList=new ArrayList<>();
     private String tong;
@@ -308,6 +310,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
         btnHoanTatThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar2.setVisibility(View.VISIBLE);
                 String ten,diachi;
                 ten=txtTnnThanhToan.getText().toString();
                 sdt="+84"+txtSDTNH.getText().toString();
@@ -343,6 +346,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
                             bill.setTime(time);
                             bill.setMaDonHang(String.valueOf(calendar.getTimeInMillis()));
                             bill.setTrangthaiThanhToan(false);
+                            bill.setTrangthaidonhang(false);
                             ///
 
 
@@ -368,6 +372,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
         btnHoanTatThanhToan=(Button) findViewById(R.id.btnHoanTatThanhToan);
         rdoOn=(RadioButton) findViewById(R.id.rdoOn);
         rdoOff=(RadioButton) findViewById(R.id.rdoOff);
+        progressBar2=(ProgressBar) findViewById(R.id.progressBar2);
         //database
         db=FirebaseDatabase.getInstance();
         ref=db.getReference();

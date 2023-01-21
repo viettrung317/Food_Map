@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class CartMainActivity extends AppCompatActivity {
         spn_selected=(Spinner) findViewById(R.id.spn_selected);
         lvBill=(ListView) findViewById(R.id.lvBill);
         getlistBill();
-        getLv();
+        getLv(listBill);
         Select_Bill();
     }
     private int toInt(Bill bill){
@@ -53,38 +52,48 @@ public class CartMainActivity extends AppCompatActivity {
         int i= Integer.parseInt(gia);
         return i;
     }
-    private void swap(Bill b1,Bill b2){
-        String Time, maDonHang,Tongtien, tenKhacHang,diaChi, Sodt;
-        List<Menu> menuList;
-        boolean trangthaiThanhToan;
-        Time=b1.getTime();
-        maDonHang=b1.getMaDonHang();
-        Tongtien=b1.getTongtien();
-        tenKhacHang=b1.getTenKhacHang();
-        diaChi=b1.getDiaChi();
-        Sodt=b1.getSodt();
-        menuList=b1.getMenuList();
-        trangthaiThanhToan=b1.getTrangthaiThanhToan();
-        //
-        b1.setTime(b2.getTime());
-        b1.setMaDonHang(b2.getMaDonHang());
-        b1.setTongtien(b2.getTongtien());
-        b1.setTenKhacHang(b2.getTenKhacHang());
-        b1.setDiaChi(b2.getDiaChi());
-        b1.setSodt(b2.getSodt());
-        b1.setMenuList(b2.getMenuList());
-        b1.setTrangthaiThanhToan(b2.getTrangthaiThanhToan());
-        //
-        b2.setTime(Time);
-        b2.setMaDonHang(maDonHang);
-        b2.setTongtien(Tongtien);
-        b2.setTenKhacHang(tenKhacHang);
-        b2.setDiaChi(diaChi);
-        b2.setSodt(Sodt);
-        b2.setMenuList(menuList);
-        b2.setTrangthaiThanhToan(trangthaiThanhToan);
-
+    private long getTime(Bill bill){
+        long time= Long.parseLong(bill.getMaDonHang());
+        return time;
     }
+    private void swap(int i,int j){
+        Bill b1=listBill.get(i);
+        listBill.set(i,listBill.get(j));
+        listBill.set(j,b1);
+    }
+    ///Sắp xếp theo thời gian;
+    private int partitiontime(List<Bill> list, int low, int high)
+    {
+        Bill pivot = list.get(high); // pivot
+        int i = (low - 1); // Index of smaller element and indicates
+        // the right position of pivot found so far
+
+        for (int j = low; j <= high - 1; j++) {
+            // If current element is smaller than the pivot
+            if (getTime(list.get(j)) > getTime(pivot)) {
+                i++; // increment index of smaller element
+                swap(i, j);
+            }
+        }
+        swap(i+1, high);
+        return (i + 1);
+    }
+
+    /* Hàm thực hiện giải thuật quick sort */
+    private void quickSorttime(List<Bill> list, int low, int high)
+    {
+        if (low < high)
+        {
+        /* pi là chỉ số nơi phần tử này đã đứng đúng vị trí
+         và là phần tử chia mảng làm 2 mảng con trái & phải */
+            int pi = partitiontime(list, low, high);
+
+            // Gọi đệ quy sắp xếp 2 mảng con trái và phải
+            quickSorttime(list, low, pi - 1);
+            quickSorttime(list, pi + 1, high);
+        }
+    }
+    ////
     private int partition(List<Bill> list, int low, int high)
     {
         Bill pivot = list.get(high); // pivot
@@ -95,10 +104,10 @@ public class CartMainActivity extends AppCompatActivity {
             // If current element is smaller than the pivot
             if (toInt(list.get(j)) < toInt(pivot)) {
                 i++; // increment index of smaller element
-                swap(list.get(i), list.get(j));
+                swap(i, j);
             }
         }
-        swap(list.get(i+1), list.get(high));
+        swap(i+1, high);
         return (i + 1);
     }
 
@@ -142,8 +151,8 @@ public class CartMainActivity extends AppCompatActivity {
     }
 
 
-    private void getLv() {
-        billAdapter=new BillAdapter(this,R.layout.item_bill,listBill);
+    private void getLv(List<Bill> list) {
+        billAdapter=new BillAdapter(this,R.layout.item_bill,list);
         lvBill.setAdapter(billAdapter);
         billAdapter.notifyDataSetChanged();
         lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -165,8 +174,12 @@ public class CartMainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(selectBillAdapter.getItem(i).getSelect().equals("Sắp xếp theo giá")){
                     quickSort(listBill,0,listBill.size()-1);
-                    getLv();
+                    getLv(listBill);
                     //billAdapter.notifyDataSetChanged();
+                }
+                else if(selectBillAdapter.getItem(i).getSelect().equals("Sắp xếp theo thời gian")){
+                    quickSorttime(listBill,0,listBill.size()-1);
+                    getLv(listBill);
                 }
                 else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn trên 500.000 đ")){
                     Bill bill=new Bill();
@@ -176,18 +189,7 @@ public class CartMainActivity extends AppCompatActivity {
                     int mid=gt50(listBill,500000,0,listBill.size()-1);
                     listBill.remove(mid);
                     List<Bill> list=listBill.subList(mid,listBill.size());
-                    billAdapter=new BillAdapter(CartMainActivity.this,R.layout.item_bill,list);
-                    lvBill.setAdapter(billAdapter);
-                    billAdapter.notifyDataSetChanged();
-                    lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Bill bill=billAdapter.getItem(i);
-                            Intent intent=new Intent(CartMainActivity.this,BillMainActivity.class);
-                            intent.putExtra("bill",bill);
-                            startActivity(intent);
-                        }
-                    });
+                    getLv(list);
                 }
                 else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn dưới 500.000 đ")){
                     Bill bill=new Bill();
@@ -197,18 +199,7 @@ public class CartMainActivity extends AppCompatActivity {
                     int mid=gt50(listBill,500000,0,listBill.size()-1);
                     listBill.remove(mid);
                     List<Bill> list=listBill.subList(0,mid);
-                    billAdapter=new BillAdapter(CartMainActivity.this,R.layout.item_bill,list);
-                    lvBill.setAdapter(billAdapter);
-                    billAdapter.notifyDataSetChanged();
-                    lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Bill bill=billAdapter.getItem(i);
-                            Intent intent=new Intent(CartMainActivity.this,BillMainActivity.class);
-                            intent.putExtra("bill",bill);
-                            startActivity(intent);
-                        }
-                    });
+                    getLv(list);
                 }
                 else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn đã thanh toán")){
                     List<Bill> list=new ArrayList<>();
@@ -218,18 +209,7 @@ public class CartMainActivity extends AppCompatActivity {
                         }
                     }
                     quickSort(list,0,list.size()-1);
-                    billAdapter=new BillAdapter(CartMainActivity.this,R.layout.item_bill,list);
-                    lvBill.setAdapter(billAdapter);
-                    billAdapter.notifyDataSetChanged();
-                    lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Bill bill=billAdapter.getItem(i);
-                            Intent intent=new Intent(CartMainActivity.this,BillMainActivity.class);
-                            intent.putExtra("bill",bill);
-                            startActivity(intent);
-                        }
-                    });
+                    getLv(list);
                 }
                 else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn chưa thanh toán")){
                     List<Bill> list=new ArrayList<>();
@@ -239,18 +219,27 @@ public class CartMainActivity extends AppCompatActivity {
                         }
                     }
                     quickSort(list,0,list.size()-1);
-                    billAdapter=new BillAdapter(CartMainActivity.this,R.layout.item_bill,list);
-                    lvBill.setAdapter(billAdapter);
-                    billAdapter.notifyDataSetChanged();
-                    lvBill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Bill bill=billAdapter.getItem(i);
-                            Intent intent=new Intent(CartMainActivity.this,BillMainActivity.class);
-                            intent.putExtra("bill",bill);
-                            startActivity(intent);
+                    getLv(list);
+                }
+                else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn đã nhận")){
+                    List<Bill> list=new ArrayList<>();
+                    for (Bill bill:listBill){
+                        if(bill.getTrangthaidonhang()==true){
+                            list.add(bill);
                         }
-                    });
+                    }
+                    quickSort(list,0,list.size()-1);
+                    getLv(list);
+                }
+                else if(selectBillAdapter.getItem(i).getSelect().equals("Đơn chưa nhận")){
+                    List<Bill> list=new ArrayList<>();
+                    for (Bill bill:listBill){
+                        if(bill.getTrangthaidonhang()==false){
+                            list.add(bill);
+                        }
+                    }
+                    quickSort(list,0,list.size()-1);
+                    getLv(list);
                 }
             }
 
@@ -300,6 +289,8 @@ public class CartMainActivity extends AppCompatActivity {
         list.add(new SelectBill("Đơn dưới 500.000 đ"));
         list.add(new SelectBill("Đơn đã thanh toán"));
         list.add(new SelectBill("Đơn chưa thanh toán"));
+        list.add(new SelectBill("Đơn đã nhận"));
+        list.add(new SelectBill("Đơn chưa nhận"));
         return list;
     }
 }

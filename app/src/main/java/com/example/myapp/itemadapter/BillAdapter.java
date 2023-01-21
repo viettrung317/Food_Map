@@ -36,6 +36,7 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         TextView txtTongBill=row.findViewById(R.id.txtTongBill);
         TextView txtTttBill=row.findViewById(R.id.txtTttBill);
         TextView txtTimeBill=row.findViewById(R.id.txtTimeBill);
+        TextView txtTtdh=row.findViewById(R.id.txtTtdh);
         final Bill bill=this.objects.get(position);
         txtBillID.setText(bill.getMaDonHang());
         txtTongBill.setText(bill.getTongtien());
@@ -44,6 +45,12 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         }
         else txtTttBill.setText("Chưa thanh toán");
         txtTimeBill.setText(bill.getTime());
+        if(bill.getTrangthaidonhang()==true){
+            txtTtdh.setText("Đã nhận hàng");
+        }
+        else{
+            txtTtdh.setText("Chờ nhận hàng");
+        }
         return row;
     }
 }

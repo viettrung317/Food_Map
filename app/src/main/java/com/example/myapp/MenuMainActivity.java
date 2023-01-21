@@ -55,26 +55,17 @@ public class MenuMainActivity extends AppCompatActivity {
 
     }
 
-    private void swap(Menu a,Menu b){
-        String gia,tenMonAn,idImg;
-        gia=a.getGia();
-        tenMonAn=a.getTenMonAn();
-        idImg=a.getIdImg();
-
-        a.setGia(b.getGia());
-        a.setTenMonAn(b.getTenMonAn());
-        a.setIdImg(b.getIdImg());
-
-        b.setGia(gia);
-        b.setTenMonAn(tenMonAn);
-        b.setIdImg(idImg);
+    private void swap(int i,int j){
+        Menu m1=menuList.get(i);
+        menuList.set(i,menuList.get(j));
+        menuList.set(j,m1);
     }
 
     private void sxtd(List<Menu> lmenu) {
         for(int i=0;i<lmenu.size();i++){
             for(int j=i+1;j<lmenu.size();j++){
                 if(getgia(lmenu.get(j))<getgia(lmenu.get(i))){
-                    swap(lmenu.get(j),lmenu.get(i));
+                    swap(j,i);
                 }
             }
 

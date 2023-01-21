@@ -1,17 +1,22 @@
 package com.example.myapp.menumodel;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Bill implements Serializable {
     private String Time, maDonHang,Tongtien, tenKhacHang, diaChi, Sodt;
     private List<Menu> menuList;
-    private Boolean trangthaiThanhToan;
+    private Boolean trangthaiThanhToan,trangthaidonhang;
+    public Map<String, Boolean> stars = new HashMap<>();
 
     public Bill() {
     }
 
-    public Bill(String tongtien, String time, String maDonHang, String tenKhacHang, String diaChi, String sodt, List<Menu> menuList, Boolean trangthaiThanhToan) {
+    public Bill(String tongtien, String time, String maDonHang, String tenKhacHang, String diaChi, String sodt, List<Menu> menuList, boolean trangthaiThanhToan,boolean trangthaidoihang) {
         this.Tongtien = tongtien;
         this.Time = time;
         this.maDonHang = maDonHang;
@@ -20,6 +25,15 @@ public class Bill implements Serializable {
         this.Sodt = sodt;
         this.menuList = menuList;
         this.trangthaiThanhToan = trangthaiThanhToan;
+        this.trangthaidonhang=trangthaidoihang;
+    }
+
+    public Boolean getTrangthaidonhang() {
+        return trangthaidonhang;
+    }
+
+    public void setTrangthaidonhang(Boolean trangthaidonhang) {
+        this.trangthaidonhang = trangthaidonhang;
     }
 
     public String getTongtien() {
@@ -84,6 +98,22 @@ public class Bill implements Serializable {
 
     public void setTrangthaiThanhToan(Boolean trangthaiThanhToan) {
         this.trangthaiThanhToan = trangthaiThanhToan;
+    }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("maDonHang", maDonHang);
+        result.put("tenKhacHang", tenKhacHang);
+        result.put("Sodt", Sodt);
+        result.put("diaChi", diaChi);
+        result.put("Tongtien",Tongtien);
+        result.put("menuList", menuList);
+        result.put("Time", Time);
+        result.put("trangthaiThanhToan", trangthaiThanhToan);
+        result.put("trangthaidonhang",trangthaidonhang);
+        result.put("stars", stars);
+
+        return result;
     }
 }
 
